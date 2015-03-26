@@ -10,7 +10,7 @@ All logrus fields will be sent as additional fields on Graylog.
 
 The hook must be configured with:
 
-* A Graylog UDP address *(a "ip:port" string)
+* A Graylog UDP address (a "<ip>:<port>" string)
 * A facility
 * an optional hash with extra global fields. These fields will be included in all messages sent to Graylog
 
