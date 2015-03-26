@@ -8,7 +8,7 @@ import (
 	"github.com/SocialCodeInc/go-gelf/gelf"
 )
 
-const SyslogDebugLevel = 7
+const SyslogInfoLevel = 6
 
 func TestWritingToUDP(t *testing.T) {
 	r, err := gelf.NewReader("127.0.0.1:0")
@@ -16,15 +16,14 @@ func TestWritingToUDP(t *testing.T) {
 		t.Fatalf("NewReader: %s", err)
 	}
 	hook := NewGraylogHook(r.Addr(), "test_facility", map[string]interface{}{"foo": "bar"})
-
-	entry := logrus.WithField("withField", "1")
 	msgData := "test message\nsecond line"
-	entry.Message = msgData
-	entry.Level = logrus.DebugLevel
 
-	hook.fire(entry)
+	log := logrus.New()
+	log.Hooks.Add(hook)
+	log.WithField("withField", "1").Info(msgData)
 
 	msg, err := r.ReadMessage()
+
 	if err != nil {
 		t.Errorf("ReadMessage: %s", err)
 	}
@@ -37,8 +36,8 @@ func TestWritingToUDP(t *testing.T) {
 		t.Errorf("msg.Full: expected %s, got %s", msgData, msg.Full)
 	}
 
-	if msg.Level != SyslogDebugLevel {
-		t.Errorf("msg.Level: expected: %d, got %d)", SyslogDebugLevel, msg.Level)
+	if msg.Level != SyslogInfoLevel {
+		t.Errorf("msg.Level: expected: %d, got %d)", SyslogInfoLevel, msg.Level)
 	}
 
 	if msg.Facility != "test_facility" {
@@ -55,7 +54,7 @@ func TestWritingToUDP(t *testing.T) {
 			msg.File)
 	}
 
-	if msg.Line != 25 { // Update this if code is updated above
+	if msg.Line != 23 { // Update this if code is updated above
 		t.Errorf("msg.Line: expected %d, got %d", 25, msg.Line)
 	}
 
