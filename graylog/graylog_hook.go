@@ -12,8 +12,10 @@ import (
 	"github.com/SocialCodeInc/go-gelf/gelf"
 )
 
-// Set graylog.BufSize = <value> _before_ calling NewHook
-var BufSize uint = 1024
+// Set graylog.BufSize = <value> _before_ calling NewGraylogHook
+// Once the buffer is full, logging will start blocking, waiting for slots to
+// be available in the queue.
+var BufSize uint = 8192
 
 // GraylogHook to send logs to a logging service compatible with the Graylog API and the GELF format.
 type GraylogHook struct {
