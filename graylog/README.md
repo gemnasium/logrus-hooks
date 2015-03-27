@@ -28,3 +28,27 @@ func main() {
     log.Info("some logging message")
 }
 ```
+
+### Disable standard logging
+
+For some reason, you may want to disable logging on stdout, and keep only the messages in Graylog (ie: a webserver inside a docker container).
+You can redirect `stdout` to `/dev/null`, or just not log anything by creating a `NullFormatter` implementing `logrus.Formatter` interface:
+
+```go
+type NullFormatter struct {
+}
+
+// Don't spend time formatting logs
+func (NullFormatter) Format(e *log.Entry) ([]byte, error) {
+    return []byte{}, nil
+    }
+}
+```
+
+And set this formatter as the new logging formatter:
+
+```go
+log.Infof("Log messages are now sent to Graylog (udp://%s)", graylogAddr) // Give a hint why logs are empty
+log.AddHook(graylog.NewGraylogHook(graylogAddr, "api", map[string]interface{}{})) // set graylogAddr accordingly
+log.SetFormatter(new(NullFormatter)) // Don't send logs to stdout
+```
