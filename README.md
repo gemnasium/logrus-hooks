@@ -5,4 +5,4 @@ These hooks have not been merge into logrus, to avoid importing a lot of probabl
 
 ## Available Hooks
 
-* (Graylog)[https://github.com/gemnasium/logrus-hooks/graylog]
+* [Graylog](https://github.com/gemnasium/logrus-hooks/graylog)
