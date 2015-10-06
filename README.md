@@ -1,8 +1,6 @@
-# Logrus Hooks <img src="http://i.imgur.com/hTeVwmJ.png" width="40" height="40" alt=":walrus:" class="emoji" title=":walrus:" />
+# !Legacy Repository!
 
-Some hooks for logrus.
-These hooks have not been merge into logrus, to avoid importing a lot of probably-not-used packages.
+The hooks have moved to their own repo:
 
-## Available Hooks
-
-* [Graylog](https://github.com/gemnasium/logrus-hooks/graylog)
+* [Graylog](https://github.com/gemnasium/logrus-graylog-hooks)
+* [Airbrake](https://github.com/gemnasium/logrus-airbrake-hooks)
